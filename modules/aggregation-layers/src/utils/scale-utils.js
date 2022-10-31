@@ -38,6 +38,12 @@ export function getQuantizeScale(domain, range) {
   return getScale(domain, range, scaleFunction);
 }
 
+export function getLogScale(domain, range) {
+  const scaleFunction = value => logScale(domain, range, value);
+
+  return getScale(domain, range, scaleFunction);
+}
+
 // return a linear scale function
 export function getLinearScale(domain, range) {
   const scaleFunction = value => linearScale(domain, range, value);
@@ -142,6 +148,20 @@ export function quantizeScale(domain, range, value) {
   return range[clampIdx];
 }
 
+export function logScale(domain, range, value) {
+  const domainRange = Math.log10(domain[1] - domain[0]);
+  if (domainRange <= 0) {
+    log.warn('logScale: invalid domain, returning range[0]')();
+    return range[0];
+  }
+
+  const step = domainRange / range.length;
+  const idx = Math.floor(Math.log10(value - domain[0]) / step);
+  const clampIdx = Math.max(Math.min(idx, range.length - 1), 0);
+
+  return range[clampIdx];
+}
+
 // Linear scale maps continuous domain to continuous range
 export function linearScale(domain, range, value) {
   return ((value - domain[0]) / (domain[1] - domain[0])) * (range[1] - range[0]) + range[0];
@@ -185,6 +205,7 @@ export function getScaleDomain(scaleType, data, valueAccessor) {
   switch (scaleType) {
     case 'quantize':
     case 'linear':
+    case 'log':
       return getLinearDomain(data, valueAccessor);
 
     case 'quantile':
@@ -212,6 +233,8 @@ export function getScaleFunctionByScaleType(scaleType) {
       return getQuantileScale;
     case 'ordinal':
       return getOrdinalScale;
+    case 'log':
+      return getLogScale;
 
     default:
       return getQuantizeScale;
