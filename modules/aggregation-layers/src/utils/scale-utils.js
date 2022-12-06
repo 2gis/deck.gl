@@ -150,15 +150,15 @@ export function quantizeScale(domain, range, value) {
 
 // Logarithmic scale with base 10
 export function logScale(domain, range, value) {
-  if (domain[1] - domain[0] <= 0 || domain[0] === 0) {
+  if (domain[1] - domain[0] <= 0) {
     log.warn('logScale: invalid domain, returning range[0]')();
     return range[0];
   }
 
-  const step = Math.log10(domain[1] / domain[0]) / (range.length - 1);
-  const idx = Math.floor(Math.log10(value / domain[0]) / step);
+  const minValue = domain[0] > 0 ? domain[0] : 1;
+  const step = Math.log10(domain[1] / minValue) / range.length;
+  const idx = Math.floor(Math.log10(value / minValue) / step);
   const clampIdx = Math.max(Math.min(idx, range.length - 1), 0);
-
   return range[clampIdx];
 }
 
