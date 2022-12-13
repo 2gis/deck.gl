@@ -148,6 +148,24 @@ export function quantizeScale(domain, range, value) {
   return range[clampIdx];
 }
 
+const MIN_SAFE_LOG_DOMAIN_VALUE = 1;
+
+function getDelta(realDomainMinValue) {
+  return realDomainMinValue >= MIN_SAFE_LOG_DOMAIN_VALUE
+    ? 0
+    : MIN_SAFE_LOG_DOMAIN_VALUE - realDomainMinValue;
+}
+
+function getNormalizedDomain(realDomainMinValue, realDomainMaxValue) {
+  const delta = getDelta(realDomainMinValue);
+  return [realDomainMinValue + delta, realDomainMaxValue + delta];
+}
+
+function getNormalizedValue(realDomainMinValue, value) {
+  const delta = getDelta(realDomainMinValue);
+  return value + delta;
+}
+
 // Logarithmic scale with base 10
 export function logScale(domain, range, value) {
   if (domain[1] - domain[0] <= 0) {
@@ -155,9 +173,11 @@ export function logScale(domain, range, value) {
     return range[0];
   }
 
-  const minValue = domain[0] > 0 ? domain[0] : 1;
-  const step = Math.log10(domain[1] / minValue) / range.length;
-  const idx = Math.floor(Math.log10(value / minValue) / step);
+  const [minValue, maxValue] = getNormalizedDomain(domain[0], domain[1]);
+  const normalizedValue = getNormalizedValue(domain[0], value);
+
+  const step = Math.log10(maxValue / minValue) / range.length;
+  const idx = Math.floor(Math.log10(normalizedValue / minValue) / step);
   const clampIdx = Math.max(Math.min(idx, range.length - 1), 0);
   return range[clampIdx];
 }

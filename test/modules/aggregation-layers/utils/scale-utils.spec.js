@@ -3,8 +3,9 @@ import {
   quantizeScale,
   getQuantileScale,
   getOrdinalScale,
-  getLinearScale
-} from '@deck.gl/aggregation-layers/utils/scale-utils';
+  getLinearScale,
+  getLogScale
+} from '@pro/deck.gl-aggregation-layers/utils/scale-utils';
 
 const RANGE = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
 const LINEAR_SCALE_TEST_CASES = [
@@ -38,6 +39,20 @@ const QUANTIZE_SCALE_TEST_CASES = [
     range: RANGE,
     value: 1,
     result: RANGE[0]
+  },
+  {
+    title: 'negative-value-on-the-edge-of-domain',
+    domain: [-10, 99],
+    range: RANGE,
+    value: -10,
+    result: RANGE[0]
+  },
+  {
+    title: 'negative-value-in-the-middle-of-domain',
+    domain: [-100, 100],
+    range: RANGE,
+    value: -10,
+    result: RANGE[4]
   }
 ];
 
@@ -103,6 +118,44 @@ const ORDINAL_SCALE_TEST_CASES = [
   }
 ];
 
+const LOG_SCALE_TEST_CASES = [
+  {
+    title: 'simple-one-value-domain',
+    domain: [1, 10],
+    range: [11],
+    value: 1,
+    result: 11
+  },
+  {
+    title: 'value-in-the-center-of-domain',
+    domain: [1, 10, 100],
+    range: [11, 22],
+    value: 10,
+    result: 22
+  },
+  {
+    title: 'value-in-the-middle-of-interval',
+    domain: [1, 10, 100],
+    range: [11, 22],
+    value: 50,
+    result: 22
+  },
+  {
+    title: 'value-on-the-edge-of-interval',
+    domain: [1, 100],
+    range: [11, 22],
+    value: 9,
+    result: 11
+  },
+  {
+    title: 'multi-range',
+    domain: [1, 100000],
+    range: [11, 22, 33, 44, 55],
+    value: 9,
+    result: 11
+  }
+];
+
 test('scale-utils#import', t => {
   t.ok(quantizeScale, 'quantizeScale imported OK');
   t.end();
@@ -157,6 +210,15 @@ test('scale-utils#ordinalScale', t => {
       const result = ordinalScale(tc.values[i]);
       t.deepEqual(result, tc.results[i], `ordinalScale ${tc.title} returned expected value`);
     }
+  }
+  t.end();
+});
+
+test('scale-utils@logScale', t => {
+  for (const tc of LOG_SCALE_TEST_CASES) {
+    const logScale = getLogScale(tc.domain, tc.range);
+    const result = logScale(tc.value);
+    t.equal(result, tc.result, `logScale ${tc.title} returned expected value`);
   }
   t.end();
 });
