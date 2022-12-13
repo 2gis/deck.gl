@@ -19,12 +19,12 @@
 // THE SOFTWARE.
 
 import test from 'tape-promise/tape';
-import GridAggregationLayer from '@deck.gl/aggregation-layers/grid-aggregation-layer';
-import GPUGridAggregator from '@deck.gl/aggregation-layers/utils/gpu-grid-aggregation/gpu-grid-aggregator';
+import GridAggregationLayer from '@pro/deck.gl-aggregation-layers/grid-aggregation-layer';
+import GPUGridAggregator from '@pro/deck.gl-aggregation-layers/utils/gpu-grid-aggregation/gpu-grid-aggregator';
 import {
   AGGREGATION_OPERATION,
   getValueFunc
-} from '@deck.gl/aggregation-layers/utils/aggregation-operation-utils';
+} from '@pro/deck.gl-aggregation-layers/utils/aggregation-operation-utils';
 import GL from '@luma.gl/constants';
 import {Layer} from 'deck.gl';
 import {testLayer, gl} from '@deck.gl/test-utils';

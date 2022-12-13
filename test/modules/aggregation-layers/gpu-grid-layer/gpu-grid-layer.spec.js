@@ -22,8 +22,8 @@ import test from 'tape-promise/tape';
 import * as FIXTURES from 'deck.gl-test/data';
 import {testLayer, generateLayerTests, testInitializeLayer} from '@deck.gl/test-utils';
 import {makeSpy} from '@probe.gl/test-utils';
-import {GPUGridLayer} from '@deck.gl/aggregation-layers';
-import GPUGridCellLayer from '@deck.gl/aggregation-layers/gpu-grid-layer/gpu-grid-cell-layer';
+import {GPUGridLayer} from '@pro/deck.gl-aggregation-layers';
+import GPUGridCellLayer from '@pro/deck.gl-aggregation-layers/gpu-grid-layer/gpu-grid-cell-layer';
 import {setupSpysForWebGL1, restoreSpies} from './webgl1-spies-utils';
 import {gl} from '@deck.gl/test-utils';
 

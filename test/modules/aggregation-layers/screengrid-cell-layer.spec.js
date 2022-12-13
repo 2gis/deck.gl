@@ -21,7 +21,7 @@
 import test from 'tape-promise/tape';
 import {Buffer, Texture2D} from '@luma.gl/core';
 import {gl} from '@deck.gl/test-utils';
-import ScreenGridCellLayer from '@deck.gl/aggregation-layers/screen-grid-layer/screen-grid-cell-layer';
+import ScreenGridCellLayer from '@pro/deck.gl-aggregation-layers/screen-grid-layer/screen-grid-cell-layer';
 
 import {testLayer} from '@deck.gl/test-utils';
 let cellScale;

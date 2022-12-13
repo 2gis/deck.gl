@@ -20,7 +20,7 @@
 
 import test from 'tape-promise/tape';
 
-import {alignToCell} from '@deck.gl/aggregation-layers/utils/grid-aggregation-utils';
+import {alignToCell} from '@pro/deck.gl-aggregation-layers/utils/grid-aggregation-utils';
 
 test('GridAggregationUtils#alignToCell (CPU)', t => {
   t.equal(alignToCell(-3, 5), -5);

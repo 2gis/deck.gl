@@ -1,16 +1,16 @@
 import test from 'tape-promise/tape';
 import {gl} from '@deck.gl/test-utils';
-import GPUGridAggregator from '@deck.gl/aggregation-layers/utils/gpu-grid-aggregation/gpu-grid-aggregator';
+import GPUGridAggregator from '@pro/deck.gl-aggregation-layers/utils/gpu-grid-aggregation/gpu-grid-aggregator';
 import {
   AGGREGATION_OPERATION,
   getValueFunc
-} from '@deck.gl/aggregation-layers/utils/aggregation-operation-utils';
-import {pointToDensityGridDataCPU} from '@deck.gl/aggregation-layers/cpu-grid-layer/grid-aggregator';
-import BinSorter from '@deck.gl/aggregation-layers/utils/bin-sorter';
+} from '@pro/deck.gl-aggregation-layers/utils/aggregation-operation-utils';
+import {pointToDensityGridDataCPU} from '@pro/deck.gl-aggregation-layers/cpu-grid-layer/grid-aggregator';
+import BinSorter from '@pro/deck.gl-aggregation-layers/utils/bin-sorter';
 import {
   getBoundingBox,
   getGridParams
-} from '@deck.gl/aggregation-layers/utils/grid-aggregation-utils';
+} from '@pro/deck.gl-aggregation-layers/utils/grid-aggregation-utils';
 import {COORDINATE_SYSTEM} from '@deck.gl/core';
 import {GridAggregationData} from 'deck.gl-test/data';
 import {equals, config} from '@math.gl/core';
