@@ -166,7 +166,15 @@ function getNormalizedValue(realDomainMinValue, value) {
   return value + delta;
 }
 
-// Logarithmic scale with base 10
+/**
+ * Logarithmic scale with base 10
+ *
+ * This implementation also includes normalization step.
+ * We are shifting initial domain and all values to fit into log function's safe domain, which is [1; ∞)
+ *
+ * If you're using this scale with negative or zero values and having additional post-visualization
+ * logic (e.g. using onSetColorDomain callback) - keep in mind this normalization step and values shift.
+ */
 export function logScale(domain, range, value) {
   if (domain[1] - domain[0] <= 0) {
     log.warn('logScale: invalid domain, returning range[0]')();
