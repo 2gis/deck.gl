@@ -22,7 +22,7 @@ import test from 'tape-promise/tape';
 
 import * as FIXTURES from 'deck.gl-test/data';
 
-import {pointToDensityGridDataCPU} from '@deck.gl/aggregation-layers/cpu-grid-layer/grid-aggregator';
+import {pointToDensityGridDataCPU} from '@pro/deck.gl-aggregation-layers/cpu-grid-layer/grid-aggregator';
 
 const getPosition = d => d.COORDINATES;
 const {points, sampleViewport} = FIXTURES;

@@ -23,7 +23,7 @@ import test from 'tape-promise/tape';
 import {
   getValueFunc,
   wrapGetValueFunc
-} from '@deck.gl/aggregation-layers/utils/aggregation-operation-utils';
+} from '@pro/deck.gl-aggregation-layers/utils/aggregation-operation-utils';
 
 const data = [
   {source: 10, index: 0},

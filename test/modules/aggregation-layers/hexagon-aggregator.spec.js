@@ -23,7 +23,7 @@ import {WebMercatorViewport} from 'deck.gl';
 
 import * as FIXTURES from 'deck.gl-test/data';
 
-import {pointToHexbin} from '@deck.gl/aggregation-layers/hexagon-layer/hexagon-aggregator';
+import {pointToHexbin} from '@pro/deck.gl-aggregation-layers/hexagon-layer/hexagon-aggregator';
 import {makeSpy} from '@probe.gl/test-utils';
 import {log} from '@deck.gl/core';
 

@@ -21,8 +21,8 @@ import test from 'tape-promise/tape';
 import * as FIXTURES from 'deck.gl-test/data';
 import {testLayer, generateLayerTests} from '@deck.gl/test-utils';
 import {MapView} from '@deck.gl/core';
-import {HeatmapLayer} from '@deck.gl/aggregation-layers';
-import {default as TriangleLayer} from '@deck.gl/aggregation-layers/heatmap-layer/triangle-layer';
+import {HeatmapLayer} from '@pro/deck.gl-aggregation-layers';
+import {default as TriangleLayer} from '@pro/deck.gl-aggregation-layers/heatmap-layer/triangle-layer';
 
 const getPosition = d => d.COORDINATES;
 

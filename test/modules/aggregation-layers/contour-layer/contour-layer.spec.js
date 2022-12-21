@@ -24,7 +24,7 @@ import * as FIXTURES from 'deck.gl-test/data';
 import {testLayer, testInitializeLayer, generateLayerTests} from '@deck.gl/test-utils';
 
 import {LineLayer, SolidPolygonLayer} from '@deck.gl/layers';
-import {ContourLayer} from '@deck.gl/aggregation-layers';
+import {ContourLayer} from '@pro/deck.gl-aggregation-layers';
 
 const getPosition = d => d.COORDINATES;
 const CONTOURS1 = [

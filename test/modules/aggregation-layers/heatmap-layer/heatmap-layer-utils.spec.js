@@ -25,7 +25,7 @@ import {
   getTextureCoordinates,
   scaleToAspectRatio,
   packVertices
-} from '@deck.gl/aggregation-layers/heatmap-layer/heatmap-layer-utils';
+} from '@pro/deck.gl-aggregation-layers/heatmap-layer/heatmap-layer-utils';
 
 test('HeatmapLayerUtils#getBounds', t => {
   const TESTS = [

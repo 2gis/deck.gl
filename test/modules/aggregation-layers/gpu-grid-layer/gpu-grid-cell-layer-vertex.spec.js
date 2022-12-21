@@ -1,6 +1,6 @@
 import test from 'tape-promise/tape';
-// import VS from '@deck.gl/aggregation-layers/gpu-grid-layer/gpu-grid-cell-layer-vertex.glsl';
-import {getQuantizeScale} from '@deck.gl/aggregation-layers/utils/scale-utils';
+// import VS from '@pro/deck.gl-aggregation-layers/gpu-grid-layer/gpu-grid-cell-layer-vertex.glsl';
+import {getQuantizeScale} from '@pro/deck.gl-aggregation-layers/utils/scale-utils';
 import {project32, gouraudLighting, picking} from '@deck.gl/core';
 import {gl} from '@deck.gl/test-utils';
 import {Transform, Buffer} from '@luma.gl/core';

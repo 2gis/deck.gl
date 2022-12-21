@@ -20,8 +20,8 @@
 
 import {isWebGL2, fp64 as fp64ShaderModule} from '@luma.gl/core';
 import {project32, gouraudLighting, picking} from '@deck.gl/core';
-import {_GPUGridAggregator as GPUGridAggregator} from '@deck.gl/aggregation-layers';
-import GPUGridCellLayer from '@deck.gl/aggregation-layers/gpu-grid-layer/gpu-grid-cell-layer';
+import {_GPUGridAggregator as GPUGridAggregator} from '@pro/deck.gl-aggregation-layers';
+import GPUGridCellLayer from '@pro/deck.gl-aggregation-layers/gpu-grid-layer/gpu-grid-cell-layer';
 import {makeSpy} from '@probe.gl/test-utils';
 
 const VS = 'void main() {gl_Position = vec4(0);}';
