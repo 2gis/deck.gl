@@ -40,14 +40,7 @@ import {getGridOffset} from '../utils/grid-aggregation-utils';
  * @returns {object} - grid data, cell dimension
  */
 export function pointToDensityGridDataCPU(props, aggregationParams) {
-  const hashInfo = pointsToGridHashing(props, aggregationParams);
-  const result = getGridLayerDataFromGridHash(hashInfo);
-
-  return {
-    gridHash: hashInfo.gridHash,
-    gridOffset: hashInfo.gridOffset,
-    data: result
-  };
+  return pointsToGridHashing(props, aggregationParams);
 }
 
 /**
@@ -65,7 +58,6 @@ function pointsToGridHashing(props, aggregationParams) {
   const {size} = attributes.positions.getAccessor();
   const boundingBox =
     aggregationParams.boundingBox || getPositionBoundingBox(attributes.positions, numInstances);
-  const offsets = aggregationParams.posOffset || [180, 90];
   const gridOffset = aggregationParams.gridOffset || getGridOffset(boundingBox, cellSize);
 
   if (gridOffset.xOffset <= 0 || gridOffset.yOffset <= 0) {
@@ -79,6 +71,10 @@ function pointsToGridHashing(props, aggregationParams) {
   // calculate count per cell
   const gridHash = {};
 
+  const gridData = [];
+
+  const gridSizeX = (boundingBox.xMax - boundingBox.xMin) / gridOffset.xOffset;
+
   const {iterable, objectInfo} = createIterable(data);
   const position = new Array(3);
   for (const pt of iterable) {
@@ -88,18 +84,33 @@ function pointsToGridHashing(props, aggregationParams) {
     position[2] = size >= 3 ? positions[objectInfo.index * size + 2] : 0;
     const [x, y] = projectPoints ? viewport.project(position) : position;
     if (Number.isFinite(x) && Number.isFinite(y)) {
-      const yIndex = Math.floor((y + offsets[1]) / gridOffset.yOffset);
-      const xIndex = Math.floor((x + offsets[0]) / gridOffset.xOffset);
+      const yIndex = Math.floor((y - boundingBox.yMin) / gridOffset.yOffset);
+      const xIndex = Math.floor((x - boundingBox.xMin) / gridOffset.xOffset);
       if (
         !projectPoints ||
         // when doing screen space agggregation (projectPoints = true), filter points outside of the viewport range.
         (xIndex >= 0 && xIndex < numCol && yIndex >= 0 && yIndex < numRow)
       ) {
-        const key = `${yIndex}-${xIndex}`;
+        const key = yIndex * gridSizeX + xIndex;
 
-        gridHash[key] = gridHash[key] || {count: 0, points: [], lonIdx: xIndex, latIdx: yIndex};
-        gridHash[key].count += 1;
-        gridHash[key].points.push({
+        let cell = gridHash[key];
+        if (!cell) {
+          cell = gridHash[key] = {
+            count: 0,
+            points: [],
+            lonIdx: xIndex,
+            latIdx: yIndex,
+            position: [
+              boundingBox.xMin + gridOffset.xOffset * xIndex,
+              boundingBox.yMin + gridOffset.yOffset * yIndex
+            ],
+            index: gridData.length
+          };
+          gridData.push(cell);
+        }
+
+        cell.count += 1;
+        cell.points.push({
           source: pt,
           index: objectInfo.index
         });
@@ -107,30 +118,9 @@ function pointsToGridHashing(props, aggregationParams) {
     }
   }
 
-  return {gridHash, gridOffset, offsets: [offsets[0] * -1, offsets[1] * -1]};
+  return {gridHash, gridOffset, data: gridData};
 }
 /* eslint-enable max-statements, complexity */
-
-function getGridLayerDataFromGridHash({gridHash, gridOffset, offsets}) {
-  const data = new Array(Object.keys(gridHash).length);
-  let i = 0;
-  for (const key in gridHash) {
-    const idxs = key.split('-');
-    const latIdx = parseInt(idxs[0], 10);
-    const lonIdx = parseInt(idxs[1], 10);
-    const index = i++;
-
-    data[index] = {
-      index,
-      position: [
-        offsets[0] + gridOffset.xOffset * lonIdx,
-        offsets[1] + gridOffset.yOffset * latIdx
-      ],
-      ...gridHash[key]
-    };
-  }
-  return data;
-}
 
 // Calculate bounding box of position attribute
 function getPositionBoundingBox(positionAttribute, numInstance) {
