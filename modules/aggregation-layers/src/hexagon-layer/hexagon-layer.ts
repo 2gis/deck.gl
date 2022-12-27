@@ -171,7 +171,7 @@ type _HexagonLayerProps<DataT = any> = {
    * Supported Values are 'quantize', 'quantile' and 'ordinal'.
    * @default 'quantize'
    */
-  colorScaleType?: 'quantize' | 'quantile' | 'ordinal';
+  colorScaleType?: 'quantize' | 'quantile' | 'ordinal' | 'log';
 
   /**
    * Scaling function used to determine the elevation of the grid cell, only supports 'linear'.

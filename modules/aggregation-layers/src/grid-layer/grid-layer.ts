@@ -101,7 +101,7 @@ export default class GridLayer<DataT = any, ExtraPropsT = {}> extends CompositeL
       // accessor for custom color or elevation calculation is specified
       return false;
     }
-    if (colorScaleType === 'quantile' || colorScaleType === 'ordinal') {
+    if (colorScaleType === 'quantile' || colorScaleType === 'ordinal' || colorScaleType === 'log') {
       // quantile and ordinal scales are not supported on GPU
       return false;
     }
