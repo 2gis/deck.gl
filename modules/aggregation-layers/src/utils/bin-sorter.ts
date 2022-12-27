@@ -203,6 +203,7 @@ export default class BinSorter {
     switch (scaleType) {
       case 'quantize':
       case 'linear':
+      case 'log':
         return [bins[lowerIdx].value, bins[upperIdx].value];
 
       case 'quantile':

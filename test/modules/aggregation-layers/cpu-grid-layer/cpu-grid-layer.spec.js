@@ -25,7 +25,7 @@ import * as FIXTURES from 'deck.gl-test/data';
 import {testLayer, testInitializeLayer, generateLayerTests} from '@deck.gl/test-utils';
 
 import {GridCellLayer} from '@deck.gl/layers';
-import {CPUGridLayer} from '@deck.gl/aggregation-layers';
+import {CPUGridLayer} from '@pro/deck.gl-aggregation-layers';
 
 test('CPUGridLayer', t => {
   const testCases = generateLayerTests({

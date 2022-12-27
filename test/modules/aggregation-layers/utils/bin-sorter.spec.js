@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 
 import test from 'tape-promise/tape';
-import BinSorter from '@deck.gl/aggregation-layers/utils/bin-sorter';
+import BinSorter from '@pro/deck.gl-aggregation-layers/utils/bin-sorter';
 
 const mockBins = [
   {points: [{a: null}]},

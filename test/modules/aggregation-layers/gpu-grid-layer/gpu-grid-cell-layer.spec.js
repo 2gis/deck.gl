@@ -21,7 +21,7 @@
 import test from 'tape-promise/tape';
 import {Buffer} from '@luma.gl/core';
 import {testLayer, testInitializeLayer} from '@deck.gl/test-utils';
-import GPUGridCellLayer from '@deck.gl/aggregation-layers/gpu-grid-layer/gpu-grid-cell-layer';
+import GPUGridCellLayer from '@pro/deck.gl-aggregation-layers/gpu-grid-layer/gpu-grid-cell-layer';
 import {setupSpysForWebGL1, restoreSpies} from './webgl1-spies-utils';
 import {gl} from '@deck.gl/test-utils';
 const SAMPLE_BUFFER = new Buffer(gl);

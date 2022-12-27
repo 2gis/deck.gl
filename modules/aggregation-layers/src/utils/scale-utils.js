@@ -38,6 +38,12 @@ export function getQuantizeScale(domain, range) {
   return getScale(domain, range, scaleFunction);
 }
 
+export function getLogScale(domain, range) {
+  const scaleFunction = value => logScale(domain, range, value);
+
+  return getScale(domain, range, scaleFunction);
+}
+
 // return a linear scale function
 export function getLinearScale(domain, range) {
   const scaleFunction = value => linearScale(domain, range, value);
@@ -142,6 +148,48 @@ export function quantizeScale(domain, range, value) {
   return range[clampIdx];
 }
 
+const MIN_SAFE_LOG_DOMAIN_VALUE = 1;
+
+function getDelta(realDomainMinValue) {
+  return realDomainMinValue >= MIN_SAFE_LOG_DOMAIN_VALUE
+    ? 0
+    : MIN_SAFE_LOG_DOMAIN_VALUE - realDomainMinValue;
+}
+
+function getNormalizedDomain(realDomainMinValue, realDomainMaxValue) {
+  const delta = getDelta(realDomainMinValue);
+  return [realDomainMinValue + delta, realDomainMaxValue + delta];
+}
+
+function getNormalizedValue(realDomainMinValue, value) {
+  const delta = getDelta(realDomainMinValue);
+  return value + delta;
+}
+
+/**
+ * Logarithmic scale with base 10
+ *
+ * This implementation also includes normalization step.
+ * We are shifting initial domain and all values to fit into log function's safe domain, which is [1; ∞)
+ *
+ * If you're using this scale with negative or zero values and having additional post-visualization
+ * logic (e.g. using onSetColorDomain callback) - keep in mind this normalization step and values shift.
+ */
+export function logScale(domain, range, value) {
+  if (domain[1] - domain[0] <= 0) {
+    log.warn('logScale: invalid domain, returning range[0]')();
+    return range[0];
+  }
+
+  const [minValue, maxValue] = getNormalizedDomain(domain[0], domain[1]);
+  const normalizedValue = getNormalizedValue(domain[0], value);
+
+  const step = Math.log10(maxValue / minValue) / range.length;
+  const idx = Math.floor(Math.log10(normalizedValue / minValue) / step);
+  const clampIdx = Math.max(Math.min(idx, range.length - 1), 0);
+  return range[clampIdx];
+}
+
 // Linear scale maps continuous domain to continuous range
 export function linearScale(domain, range, value) {
   return ((value - domain[0]) / (domain[1] - domain[0])) * (range[1] - range[0]) + range[0];
@@ -185,6 +233,7 @@ export function getScaleDomain(scaleType, data, valueAccessor) {
   switch (scaleType) {
     case 'quantize':
     case 'linear':
+    case 'log':
       return getLinearDomain(data, valueAccessor);
 
     case 'quantile':
@@ -212,6 +261,8 @@ export function getScaleFunctionByScaleType(scaleType) {
       return getQuantileScale;
     case 'ordinal':
       return getOrdinalScale;
+    case 'log':
+      return getLogScale;
 
     default:
       return getQuantizeScale;

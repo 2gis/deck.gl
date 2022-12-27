@@ -98,7 +98,7 @@ const HexagonLayerExample = {
     elevationScale: 1,
     elevationRange: [0, 3000],
     coverage: 1,
-    colorScaleType: 'quantile',
+    colorScaleType: 'log',
     getPosition: d => d.COORDINATES,
     getColorValue: points => getMean(points, 'SPACES'),
     getElevationValue: points => getMax(points, 'SPACES')

@@ -158,7 +158,7 @@ export type _CPUGridLayerProps<DataT> = {
    * Supported Values are 'quantize', 'linear', 'quantile' and 'ordinal'.
    * @default 'quantize'
    */
-  colorScaleType?: 'quantize' | 'linear' | 'quantile' | 'ordinal';
+  colorScaleType?: 'quantize' | 'linear' | 'quantile' | 'ordinal' | 'log';
 
   /**
    * Scaling function used to determine the elevation of the grid cell, only supports 'linear'.

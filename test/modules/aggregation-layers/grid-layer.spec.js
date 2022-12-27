@@ -20,7 +20,7 @@
 
 import test from 'tape-promise/tape';
 import {testLayer, generateLayerTests} from '@deck.gl/test-utils';
-import {GridLayer, _GPUGridAggregator as GPUGridAggregator} from '@deck.gl/aggregation-layers';
+import {GridLayer, _GPUGridAggregator as GPUGridAggregator} from '@pro/deck.gl-aggregation-layers';
 import * as FIXTURES from 'deck.gl-test/data';
 import {gl} from '@deck.gl/test-utils';
 

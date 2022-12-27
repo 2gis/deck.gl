@@ -25,7 +25,7 @@ import * as data from 'deck.gl-test/data';
 import {testLayer, testInitializeLayer, generateLayerTests} from '@deck.gl/test-utils';
 
 import {ColumnLayer} from '@deck.gl/layers';
-import {HexagonLayer} from '@deck.gl/aggregation-layers';
+import {HexagonLayer} from '@pro/deck.gl-aggregation-layers';
 
 test('HexagonLayer', t => {
   const testCases = generateLayerTests({

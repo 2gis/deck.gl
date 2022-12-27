@@ -1,5 +1,5 @@
 import {OrthographicView, COORDINATE_SYSTEM} from '@deck.gl/core';
-import {ScreenGridLayer} from '@deck.gl/aggregation-layers';
+import {ScreenGridLayer} from '@pro/deck.gl-aggregation-layers';
 import {points} from 'deck.gl-test/data';
 
 import {WIDTH, HEIGHT} from '../constants';
